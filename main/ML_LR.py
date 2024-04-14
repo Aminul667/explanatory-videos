@@ -16,10 +16,12 @@ class TableExamples(Scene):
             line_config={"stroke_width": 1, "color": YELLOW}
         )
 
+        print("TablePrint", table[0])
+
         col_labs = table.get_col_labels()
-        
+
         col_labs.set_color(RED)
         table.scale(0.5)
 
-        self.play(FadeIn(table), run_time=3)
+        self.play(FadeIn(table[0][:-1]), run_time=3)
         self.wait()
