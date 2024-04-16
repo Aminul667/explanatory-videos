@@ -60,11 +60,19 @@ class TableExamples(Scene):
         )
         ax.scale(0.6).move_to(DOWN)
 
-        dot_1 = Dot(ax.c2p(1200, 25000), color=GREEN)
-        dot_2 = Dot(ax.c2p(1500, 30000), color=GREEN)
-        dot_3 = Dot(ax.c2p(1800, 35000), color=GREEN)
+        dot_1 = Dot(ax.c2p(1000, 16000), color=GREEN)
+        dot_2 = Dot(ax.c2p(1500, 33000), color=GREEN)
+        dot_3 = Dot(ax.c2p(1800, 40000), color=GREEN)
 
-        graph = ax.plot(lambda x: 20*x, x_range=[0.001, 1800], use_smoothing=False)
+        # graph = ax.plot(lambda x: 20*x, x_range=[0.001, 2000], use_smoothing=False)
 
-        self.add(ax, dot_1, dot_2, dot_3, graph)
+        self.play(Write(ax), run_time=3)
+        self.wait()
+
+        self.play(Write(dot_1), Write(dot_2), Write(dot_3), run_time=3)
+        self.wait()
+
+        # self.play(Write(group), run_time=3)
+        # self.wait()
+        # self.add(ax, dot_1, dot_2, dot_3)
 
