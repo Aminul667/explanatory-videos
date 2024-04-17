@@ -1,7 +1,7 @@
 from manim import *
 
 
-class TableExamples(Scene):
+class MachineLearning(Scene):
     def construct(self):
         data = [
             ["1200", "25000"],
@@ -23,14 +23,11 @@ class TableExamples(Scene):
         )
         tablePredict = Table(
             dataPredict,
-            # row_labels=[Text("R1"), Text("R2")],
             col_labels=[Text("Size"), Text("Price"), Text(
                 "Predicted Price"), Text("Actual-Predicted")],
             include_outer_lines=True,
             line_config={"stroke_width": 1, "color": YELLOW}
         )
-
-        # print("TablePrint", table[0])
 
         col_labs = table.get_col_labels()
         col_labs_predict = tablePredict.get_col_labels()
@@ -44,7 +41,6 @@ class TableExamples(Scene):
         self.play(Write(table), run_time=3)
         self.wait()
 
-        # self.remove(table)
         self.play(Write(tablePredict), run_time=3)
         self.remove(table)
         self.wait()
@@ -64,15 +60,39 @@ class TableExamples(Scene):
         dot_2 = Dot(ax.c2p(1500, 33000), color=GREEN)
         dot_3 = Dot(ax.c2p(1800, 40000), color=GREEN)
 
+        dot_group = VGroup(dot_1, dot_2, dot_3)
+
         # graph = ax.plot(lambda x: 20*x, x_range=[0.001, 2000], use_smoothing=False)
 
         self.play(Write(ax), run_time=3)
         self.wait()
 
-        self.play(Write(dot_1), Write(dot_2), Write(dot_3), run_time=3)
+        self.play(Write(dot_group), run_time=3)
         self.wait()
 
-        # self.play(Write(group), run_time=3)
-        # self.wait()
-        # self.add(ax, dot_1, dot_2, dot_3)
+        line_v = ax.get_vertical_line(dot_1.get_center(), color=RED)
+        line_h = ax.get_horizontal_line(dot_1.get_center(), color=RED)
+
+        line_group = VGroup()
+
+        for i in [dot_1, dot_2, dot_3]:
+            line_v = ax.get_vertical_line(i.get_center(), color=RED)
+            line_h = ax.get_horizontal_line(i.get_center(), color=RED)
+
+            line_group.add(line_v)
+            line_group.add(line_h)
+
+            self.play(Create(line_v), Create(line_h))
+            self.wait()
+
+        self.play(FadeOut(line_group))
+        self.wait()
+
+        equation = MathTex("y_{predict} = 20x_{size}").next_to(tablePredict, RIGHT, buff=1)
+        self.play(Write(equation))
+
+        graph = ax.plot(lambda x: 25*x, x_range=[0.001, 2000], use_smoothing=False)
+        graph.set_color(BLUE)
+
+        self.play(Create(graph))
 
